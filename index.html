@@ -1,0 +1,217 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @Chandnee
+ Sign out
+ Watch 2
+  Star 6  Fork 7 stephenmcd/mezzanine.jupo.org
+ Code  Issues 5  Pull requests 0  Projects 0  Wiki Insights 
+Branch: master Find file Copy pathmezzanine.jupo.org/demo/templates/index.html
+bf40455  on 5 Jan
+@stephenmcd stephenmcd Update to latest Mezzanine/Django
+1 contributor
+RawBlameHistory     
+188 lines (165 sloc)  10.9 KB
+{% extends "project_base.html" %}
+{% load twitter_tags demo_tags %}
+
+{% block content %}
+<div class="container">
+
+    <header class="row">
+    <div class="span9">
+        <h1>Mezzanine</h1>
+        <h2>An open source content management platform built using the Django framework</h2>
+        <ul class="quotes">
+            {% for quote in quotes %}
+            <li{% if forloop.first %} class="first"{% endif %}>{{ quote|cut:"&quot;"|safe }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="span3 right">
+        <p>
+            Mezzanine is <a href="http://www.linfo.org/bsdlicense.html">BSD Licensed</a>. It can be freely used,
+            modified, and redistributed commercially.
+        </p>
+        <div class="btn-group">
+            <a class="btn btn-large btn-danger dropdown-toggle" href="/admin/?mezzanine_login_interface=site&next=/blog/">
+                <img src="{{ STATIC_URL }}img/glyphicons_051_eye_open.png">
+                Try the live Demo
+            </a>
+            <ul class="dropdown-menu">
+                <li>Administration</a></li>
+                <li><a href="/set_device/default/?next=/blog/">Full site</a></li>
+                <li><a href="/set_device/mobile/?next=/blog/">Mobile site</a></li>
+            </ul>
+        </div>
+        <div class="fill login">
+            <span><label>User:</label> demo</<span>
+            <span><label class="password">Pass:</label> demo</span>
+        </div>
+    </div>
+    </header>
+
+    <div class="row"><div class="span12 fill hr"></div></div>
+
+    <section class="row">
+    <div class="span9">
+
+        <h3 id="overview">Overview</h3>
+        {{ overview|safe }}
+
+        <h3 id="using">Featured Sites</h3>
+        <div class="carousel fill slide" id="sites">
+            <div class="carousel-inner">
+                <div class="item active">
+                {% for site in featured_sites %}
+                    {% if forloop.counter0 > 0 and forloop.counter0|divisibleby:3 %}
+                    </div><div class="item">
+                    {% endif %}
+                    <a href="{{ site.0 }}"><img alt="{{ site.1 }}" src="{{ STATIC_URL }}img/sites/{{ site.1|slugify }}-homepage.jpg"></a>
+                {% endfor %}
+                </div>
+            </div>
+            <a class="carousel-control left" href="#sites" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#sites" data-slide="next">&rsaquo;</a>
+            <a class="all" href="/sites/">View all</a>
+        </div>
+
+        <div class="row">
+            <div class="span4" id="features-users">
+                <h3>Users love</h3>
+                <ul class="unstyled row features">
+                    {% for feature in features_users %}
+                    <li>{{ feature|safe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="span4" id="features-devs">
+                <h3>Developers love</h3>
+                <ul class="unstyled row features">
+                    {% for feature in features_devs %}
+                    <li>{{ feature|safe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="span3 fill right right-fill">
+            <div class="btn-group">
+                <a class="btn btn-large btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+                    <img src="{{ STATIC_URL }}img/glyphicons_181_download_alt.png">
+                    Get Mezzanine {{ version }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="http://pypi.python.org/packages/source/M/Mezzanine/Mezzanine-{{ version }}.tar.gz">Python Package Index</a></li>
+                    <li><a href="http://github.com/stephenmcd/mezzanine">GitHub</a></li>
+                    <li><a href="http://bitbucket.org/stephenmcd/mezzanine">Bitbucket</a></li>
+                </ul>
+            </div>
+
+
+            <h3>Quick Start</h3>
+<pre><em># Install from PyPI</em>
+$ pip install mezzanine
+
+<em># Create a project</em>
+$ mezzanine-project myproject
+$ cd myproject
+
+<em># Create a database</em>
+$ python manage.py createdb
+
+<em># Run the web server</em>
+$ python manage.py runserver</pre>
+
+            <ul class="unstyled links">
+                <li><a href="/docs/">
+                    <img src="{{ STATIC_URL }}img/glyphicons_071_book.png">Documentation</a></li>
+                <li><a href="/docs/frequently-asked-questions.html">
+                    <img src="{{ STATIC_URL }}img/glyphicons_194_circle_question_mark.png">FAQs</a></li>
+                <li><a href="http://groups.google.com/group/mezzanine-users">
+                    <img src="{{ STATIC_URL }}img/glyphicons_010_envelope.png">Mailing list</a></li>
+                <li><a href="http://webchat.freenode.net/?channels=mezzanine{#% url "gnotty_chat" %#}">
+                    <img src="{{ STATIC_URL }}img/glyphicons_309_comments.png">IRC</a></li>
+                <li><a href="https://github.com/stephenmcd/mezzanine/issues">
+                    <img src="{{ STATIC_URL }}img/glyphicons_341_github.png">Issue tracker</a></li>
+                <li><a href="/sites/">
+                    <img src="{{ STATIC_URL }}img/glyphicons_012_heart.png">Sites Gallery</a></li>
+            </ul>
+        </div>
+
+        <div class="donate span3">
+            <p>
+                Mezzanine will always be available to anyone free of charge, but
+                its ongoing development costs its contributors a significant amount
+                of time and resources. Please give back by donating to the project.
+            </p>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" align="center">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+                <input type="image" src="https://www.paypalobjects.com/WEBSCR-640-20110429-1/en_AU/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/WEBSCR-640-20110429-1/en_AU/i/scr/pixel.gif" width="1" height="1">
+            </form>
+        </div>
+
+        <div class="span12">
+            <h3 id="blogs">Community Blogs</h3>
+        </div>
+        <div class="blog span3">
+            <p><a href="https://twitter.com/rosslaird">Ross A. Laird</a> is a PhD, published author and teacher. His blog contains the definitive starter's guide to Mezzanine, for absolute beginners with zero experience.</p>
+            <a class="btn btn-danger" href="http://www.rosslaird.com/blog/first-steps-with-mezzanine/">Visit Ross' blog</a>
+        </div>
+        <div class="blog span3">
+            <p><a href="https://twitter.com/joshcartme">Josh Cartmell</a> is a Mezzanine advocate and long-time community contributor. His blog has a detailed focus on creating and customizing themes for Mezzanine.</p>
+            <a class="btn btn-danger" href="http://bitofpixels.com/blog/tag/mezzanine/">Visit Josh's blog</a>
+        </div>
+        <div class="blog span3">
+            <p><a href="https://twitter.com/kenbolton">Ken Bolton</a> is another long-time community steward of Mezzanine. His blog covers some of the operational aspects of hosting and deployment with Mezzanine.</p>
+            <a class="btn btn-danger" href="http://bscientific.org/blog/category/devops/">Visit Ken's blog</a>
+        </div>
+        <div class="blog span3">
+            <p><a href="https://twitter.com/stephen_mcd">Stephen McDonald</a> is the original creator and maintainer of Mezzanine. His blog contains a handful of articles covering the development history of Mezzanine.</p>
+            <a class="btn btn-danger" href="http://blog.jupo.org/">Visit Stephen's blog</a>
+        </div>
+
+    </section>
+
+</div>
+
+<footer class="fill">
+<div class="container">
+    <h3 id="mentions">Recent Mentions</h3>
+    {% tweets_for_search "from:stephen_mcd mezzanine" as tweets %}
+    <div class="row mentions">
+        {% for tweet in tweets|slice:":9"|retweets_in_search_fixer %}
+        {% if forloop.counter0 > 0 and forloop.counter0|divisibleby:3 %}
+        </div><div class="row mentions">
+        {% endif %}
+        <div class="span4">{{ tweet.text|safe }} <em>&nbsp;{{ tweet.created_at|timesince }} ago</em></div>
+        {% endfor %}
+    </div>
+</div>
+</footer>
+
+<a href="http://github.com/stephenmcd/mezzanine">
+    <img class="fork" src="{{ STATIC_URL }}img/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
+</a>
+
+{% endblock %}
+© 2017 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
